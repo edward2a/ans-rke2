@@ -1,0 +1,15 @@
+---
+- name: Kernel moduels configuration
+  ansible.builtin.include_tasks:
+    file: modprobe.yml
+
+- name: SysCtl configuration
+  ansible.builtin.include_tasks:
+    file: sysctl.yml
+
+- name: Download RKE2 install script
+  ansible.builtin.get_url:
+    url: https://get.rke2.io
+    dest: /tmp/rke2-install.sh
+    mode: '0750'
+
