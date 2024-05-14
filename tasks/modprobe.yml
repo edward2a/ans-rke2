@@ -1,0 +1,36 @@
+---
+- community.general.modprobe:
+    name: nf_conntrack
+    state: present
+    persistent: present
+
+- community.general.modprobe:
+    name: br_netfilter
+    state: present
+    persistent: present
+
+- community.general.modprobe:
+    name: ip_vs
+    state: present
+    persistent: present
+
+- community.general.modprobe:
+    name: ip_vs_lc
+    state: present
+    persistent: present
+
+- community.general.modprobe:
+    name: ip_vs_rr
+    state: present
+    persistent: present
+
+- community.general.modprobe:
+    name: ip_vs_wrr
+    state: present
+    persistent: present
+
+- community.general.modprobe:
+    name: ip_vs_sh
+    state: present
+    persistent: present
+
