@@ -17,3 +17,59 @@
     dest: /tmp/rke2-install.sh
     mode: '0750'
 
+- name: Create RKE2 configuration directory
+  ansible.builtin.file:
+    path: /etc/rancher/rke2
+    state: directory
+
+- name: Install RKE2 configuration
+  ansible.builtin.template:
+    src: templates/rke2-config.yaml.j2
+    dest: /etc/rancher/rke2/config.yaml
+
+- name: Install RKE2
+  ansible.builtin.shell:
+    executable: /bin/bash
+    cmd: "/tmp/rke2-install.sh"
+    creates: /var/lib/rancher
+  environment:
+    RKE2_INSTALL_TYPE: "{{ rke2_install_type | default('server') }}"
+
+- name: Start RKE2
+  ansible.builtin.service:
+    name: rke2-server
+    state: started
+    enabled: yes
+
+- name: Find kubectl
+  ansible.builtin.find:
+    patterns:
+    - kubectl
+    paths: /var/lib/rancher/rke2/data
+    file_type: file
+    recurse: yes
+  register: kubectl_find
+
+- debug:
+    msg: "{{ kubectl_find }}"
+
+- name: Link kubectl to system path
+  ansible.builtin.file:
+    src: "{{ kubectl_find['files'][0]['path'] }}"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+  with_items:
+  - kubectl
+  - k
+
+- name: Create root's kubectl config dir
+  ansible.builtin.file:
+    path: /root/.kube
+    state: directory
+
+- name: Link kubectl config to root user
+  ansible.builtin.file:
+    src: /etc/rancher/rke2/rke2.yaml
+    dest: /root/.kube/config
+    state: link
+
