@@ -50,9 +50,6 @@
     recurse: yes
   register: kubectl_find
 
-- debug:
-    msg: "{{ kubectl_find }}"
-
 - name: Link kubectl to system path
   ansible.builtin.file:
     src: "{{ kubectl_find['files'][0]['path'] }}"
