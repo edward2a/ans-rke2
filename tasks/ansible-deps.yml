@@ -1,0 +1,18 @@
+- name: Install Helm
+  ansible.builtin.unarchive:
+    src: "https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz"
+    dest: /usr/local/bin
+    remote_src: yes
+    creates: /usr/local/bin/helm
+    extra_opts:
+    - --add-file
+    - linux-amd64/helm
+    - --strip-components=1
+
+- name: Install Ansible dependencies
+  ansible.builtin.pip:
+    name: "{{ item }}"
+  with_items:
+  - pyyaml
+  - kubernetes
+  - pyhelm

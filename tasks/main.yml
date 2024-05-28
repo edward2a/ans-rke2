@@ -11,6 +11,10 @@
   ansible.builtin.include_tasks:
     file: prereqs.yml
 
+- name: Install Ansible dependencies
+  ansible.builtin.include_tasks:
+    file: ansible-deps.yml
+
 - name: Download RKE2 install script
   ansible.builtin.get_url:
     url: https://get.rke2.io
