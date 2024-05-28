@@ -1,0 +1,12 @@
+---
+cni:
+- {{ cluster_cni | default("calico") }}
+write-kubeconfig-mode: "0640"
+tls-san:
+- {{ cluster_tls_host }}
+disable-cloud-controller: true
+{% if nodes_config is defined %}
+  {%- if ansible_fqdn in nodes_config %}
+node-ip: {{ nodes_config[ansible_fqdn]['node_ip'] }}
+  {%- endif %}
+{%- endif %}
