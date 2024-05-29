@@ -16,9 +16,10 @@
     file: ansible-deps.yml
 
 - name: Download RKE2 install script
-  ansible.builtin.get_url:
+  ansible.builtin.uri:
     url: https://get.rke2.io
     dest: /tmp/rke2-install.sh
+    creates: /tmp/rke2-install.sh
     mode: '0750'
 
 - name: Create RKE2 configuration directory
