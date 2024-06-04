@@ -1,0 +1,26 @@
+- name: Install CSI Provisioner chart
+  kubernetes.core.helm:
+    chart_ref: "{{ csi_provisioner['chart_repo_url'] }}"
+    #chart_version: "{{ chart_version }}"
+    create_namespace: true
+    release_name: "{{ csi_provisioner['chart_release_name'] }}"
+    release_namespace: "{{ csi_provisioner['target_namespace'] }}"
+    release_values: "{{ csi_provisioner['chart_values'] }}"
+
+- name: Install CSI Attacher chart
+  kubernetes.core.helm:
+    chart_ref: "{{ csi_attacher['chart_repo_url'] }}"
+    #chart_version: "{{ chart_version }}"
+    create_namespace: true
+    release_name: "{{ csi_attacher['chart_release_name'] }}"
+    release_namespace: "{{ csi_attacher['target_namespace'] }}"
+    release_values: "{{ csi_attacher['chart_values'] }}"
+
+- name: Install CSI HostPath chart
+  kubernetes.core.helm:
+    chart_ref: "{{ csi_hostpath['chart_repo_url'] }}"
+    #chart_version: "{{ chart_version }}"
+    create_namespace: true
+    release_name: "{{ csi_hostpath['chart_release_name'] }}"
+    release_namespace: "{{ csi_hostpath['target_namespace'] }}"
+    release_values: "{{ csi_hostpath['chart_values'] }}"

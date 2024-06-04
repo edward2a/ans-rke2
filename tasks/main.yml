@@ -73,5 +73,10 @@
   ansible.builtin.file:
     src: /etc/rancher/rke2/rke2.yaml
     dest: /root/.kube/config
+    mode: "0600"
     state: link
 
+- name: HostPath CSI
+  ansible.builtin.include_tasks:
+    file: csi-hostpath.yml
+  when: csi_hostpath['enabled']
